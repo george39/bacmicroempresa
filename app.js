@@ -8,6 +8,8 @@ var bodyParser = require('body-parser')
 
 var app = express()
 
+var path = require('path')
+
 
 
 /************************************************************
@@ -45,9 +47,14 @@ app.use(function(req, res, next) {
 /************************************************************
  RUTAS BODY-PARSER
 *************************************************************/
+app.use('/', express.static('client', { redirect: false }));
 app.use('/', userRoutes);
 app.use('/', egresosRoutes);
 app.use('/', ingresosRoutes);
+
+app.get('*', function(req, res, next) {
+    res.sendFile(path.resolve('client/index.html'));
+});
 
 
 module.exports = app;
